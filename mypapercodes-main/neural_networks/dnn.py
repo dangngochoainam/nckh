@@ -24,7 +24,7 @@ def dnn(train_vectors, train_target, test_vectors, test_target):
     model.add(layers.Dense(64, activation='relu'))
     model.add(layers.Dense(32, activation='relu'))
 
-    # model.add(layers.Dense(8, activation='sigmoid'))
+    # model.add(layers.Dense(1, activation='sigmoid'))
     model.add(layers.Dense(20, activation='softmax'))
 
 
