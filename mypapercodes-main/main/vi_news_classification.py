@@ -1,7 +1,7 @@
 import utils
-from utils.read_data import read_news_dataset
+import pandas as pd
+from utils.read_data import read_news_dataset, save_cached_file, load_cached_file
 from vectorizer.tfidf_vectorizer import tfidf_vectorizer
-from vectorizer.onehot_vectorizer import onehot_vectorizer
 from classifiers.classifiers import (logistic_regression_train,
                                      svm_train,
                                      multi_nomial_naive_bayes_train,
@@ -9,14 +9,14 @@ from classifiers.classifiers import (logistic_regression_train,
 from sklearn.model_selection import train_test_split
 from neural_networks.dnn import dnn
 from pprint import pprint
-
 import numpy as np
-# from neural_networks.test import dnn
+from preprocess.preprocess import execute_new_data
+from utils import BASE_DIR
 
 def execute_dnn(path=None):
     data = read_news_dataset(path=path,
-                             is_preprocess=False,
-                             is_forced=True) if path else read_news_dataset()
+                             is_preprocess=True,
+                             is_forced=False) if path else read_news_dataset()
 
 
     train_data, test_data, train_targets, test_targets \
@@ -31,11 +31,6 @@ def execute_dnn(path=None):
         test_vectors=test_vectors.toarray(), test_target=test_targets)
 
 
-
-    # train_vectors, test_vectors = onehot_vectorizer(train_data=train_data, test_data=test_data)
-    # dnn(train_vectors=train_vectors, train_target=train_targets,
-    #     test_vectors=test_vectors, test_target=test_targets)
-
     print(np.shape(train_vectors))
     # print(train_vectors.toarray())
 
@@ -43,13 +38,36 @@ def execute_dnn(path=None):
 def execute_classifiers(classifier_method, path=None):
     data = read_news_dataset(path=path,
                              is_preprocess=True,
-                             is_forced=True) if path else read_news_dataset()
+                             is_forced=False) if path else read_news_dataset()
+
 
     train_data, test_data, train_targets, test_targets \
         = train_test_split(data.feature, data.target,
-                           test_size=0.99,
+                           test_size=0.999,
                            # test_size=0.3,
                            random_state=42)
+
+
+
+    # new_data = []
+    # new_target = []
+    # for d in train_data:
+    #     new_data.append(execute_new_data(d))
+    #
+    # for t in train_targets:
+    #     new_target.append(t)
+
+    # temp = {'feature': new_data, 'target': new_target}
+    #
+    # save_cached_file(temp, '%s/cached_data/news_dataset.sav' %BASE_DIR)
+
+    # temp = load_cached_file('%s/cached_data/news_dataset.sav' %BASE_DIR)
+    #
+    # df = pd.DataFrame(temp)
+    #
+    # train_data = train_data.append(df.feature)
+    # train_targets = train_targets.append(df.target)
+
 
     train_vectors, test_vectors = tfidf_vectorizer(train_data=train_data,
                                                    test_data=test_data)
@@ -80,11 +98,8 @@ def execute_multi_nomial_nb(path=None):
 
 
 if __name__ == '__main__':
-    # execute_dnn(path=utils.sentiment1_dataset_path)
-    execute_dnn()
-    # execute_multi_nomial_nb()
-    # execute_logistic_regression(path=utils.sentiment1_dataset_path)
-    # execute_logistic_regression()
+    # execute_dnn()
+    execute_logistic_regression()
     # execute_svm()
 
 

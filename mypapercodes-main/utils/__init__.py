@@ -23,6 +23,9 @@ def replace_empty_by_underscore(text=[]):
     return text
 
 
+with open('%s/utils/stopwords.txt' %BASE_DIR, 'r', encoding="utf8") as w:
+    stopword = w.read().split()
+
 # pos_list = replace_empty_by_underscore(read_text_file(file_path='cached_data/pos.txt'))
 # neg_list = replace_empty_by_underscore(read_text_file(file_path='cached_data/neg.txt'))
 

@@ -24,8 +24,8 @@ def dnn(train_vectors, train_target, test_vectors, test_target):
     model.add(layers.Dense(64, activation='relu'))
     model.add(layers.Dense(32, activation='relu'))
 
-    # model.add(layers.Dense(1, activation='sigmoid'))
-    model.add(layers.Dense(20, activation='softmax'))
+    model.add(layers.Dense(3, activation='softmax'))
+    # model.add(layers.Dense(3, activation='sigmoid'))
 
 
     # opt = gradient_descent_v2.SGD(learning_rate=0.01, momentum=0.9)
@@ -37,7 +37,7 @@ def dnn(train_vectors, train_target, test_vectors, test_target):
 
 
     model.fit(train_vectors, train_target,
-              epochs=20, batch_size=16,
+              epochs=20, batch_size=32,
               validation_data=(test_vectors, test_target))
 
     # print(model.summary())
