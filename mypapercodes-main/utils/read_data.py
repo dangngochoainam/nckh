@@ -8,9 +8,10 @@ import pickle
 
 def read_news_dataset(path=news_dataset_path,
                       is_preprocess=True,
-                      cached_file='cached_data/dataset.sav',
+                      cached_file='cached_data/dataset_temp.sav',
                       is_forced=False,
                       ignored_folder=['.DS_Store']):
+
 
     cached_path = os.path.join(BASE_DIR, cached_file)
 
@@ -44,7 +45,7 @@ def read_news_dataset(path=news_dataset_path,
 
                 label = label + 1
 
-        # save_cached_file(data=data, cached_file_path='%s/cached_data/dataset.sav' %BASE_DIR)
+        save_cached_file(data=data, cached_file_path='%s/cached_data/dataset_temp.sav' %BASE_DIR)
 
     return pd.DataFrame(data)
 
@@ -65,7 +66,7 @@ def replace_underline(text):
     return text.replace("_", " ")
 
 if __name__ == '__main__':
-    read_news_dataset()
+    print(read_news_dataset().feature[0])
 
 
 

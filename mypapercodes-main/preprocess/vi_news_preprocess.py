@@ -16,6 +16,11 @@ def remove_number(text):
 def remove_whitespace(text):
     return re.sub(r'\s+', ' ', text).strip()
 
+def remove_html(text):
+    return re.sub(r'<[^>]*>', '', text)
+
+
+
 if __name__ == '__main__':
     text = 'I love this book, this book is nice 3000!'
     print(remove_punctuation_characters(text))

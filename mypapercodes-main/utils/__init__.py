@@ -3,6 +3,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # news_dataset_path = '/Users/huu-thanhduong/Desktop/My-Datasets/News/tokenized_ouvnnews'
 news_dataset_path = 'C:/Users/dangn/Downloads/tokenized_ouvnnews'
+
+
 sentiment1_dataset_path = '/Users/huu-thanhduong/Desktop/My-Datasets/Sentiment/dataset1'
 sentiment2_dataset_path = '/Users/huu-thanhduong/Desktop/My-Datasets/Sentiment/dataset1'
 

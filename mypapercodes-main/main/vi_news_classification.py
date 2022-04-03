@@ -11,19 +11,32 @@ from neural_networks.dnn import dnn
 from pprint import pprint
 import numpy as np
 from preprocess.preprocess import execute_new_data
-from utils import BASE_DIR
+from utils import BASE_DIR, generate_data
+import os
 
-def execute_dnn(path=None):
-    data = read_news_dataset(path=path,
-                             is_preprocess=True,
-                             is_forced=False) if path else read_news_dataset()
+def execute_dnn(cached_file=None, cached_file_aug=None):
+    data = read_news_dataset(is_preprocess=True,
+                             is_forced=False,
+                             cached_file=cached_file)
 
 
     train_data, test_data, train_targets, test_targets \
         = train_test_split(data.feature, data.target,
-                           # test_size=0.3,
-                           test_size=0.99,
+                           test_size=0.3,
+                           # test_size=0.999,
                            random_state=42)
+
+    # if cached_file_aug:
+    #     cached_path = os.path.join(BASE_DIR, cached_file_aug)
+    #     new_data = load_cached_file(cached_file_path=cached_path)
+    # else:
+    #     new_data = generate_data(train_data, train_targets)
+    #     save_cached_file(new_data, '%s/cached_data/news_dataset.sav' %BASE_DIR)
+    #
+    # df = pd.DataFrame(new_data)
+    #
+    # train_data = train_data.append(df.feature)
+    # train_targets = train_targets.append(df.target)
 
 
     train_vectors, test_vectors = tfidf_vectorizer(train_data=train_data, test_data=test_data)
@@ -32,38 +45,31 @@ def execute_dnn(path=None):
 
 
     print(np.shape(train_vectors))
-    # print(train_vectors.toarray())
 
 
-def execute_classifiers(classifier_method, path=None):
-    data = read_news_dataset(path=path,
-                             is_preprocess=True,
-                             is_forced=False) if path else read_news_dataset()
+def execute_classifiers(classifier_method, cached_file=None, cached_file_aug=None):
+
+
+    data = read_news_dataset(is_preprocess=True,
+                             is_forced=False,
+                             cached_file=cached_file)
 
 
     train_data, test_data, train_targets, test_targets \
         = train_test_split(data.feature, data.target,
-                           test_size=0.999,
-                           # test_size=0.3,
+                           # test_size=0.999,
+                           test_size=0.3,
                            random_state=42)
 
 
-
-    # new_data = []
-    # new_target = []
-    # for d in train_data:
-    #     new_data.append(execute_new_data(d))
+    # if cached_file_aug:
+    #     cached_path = os.path.join(BASE_DIR, cached_file_aug)
+    #     new_data = load_cached_file(cached_file_path=cached_path)
+    # else:
+    #     new_data = generate_data(train_data, train_targets)
+    #     save_cached_file(new_data, '%s/cached_data/news_dataset.sav' %BASE_DIR)
     #
-    # for t in train_targets:
-    #     new_target.append(t)
-
-    # temp = {'feature': new_data, 'target': new_target}
-    #
-    # save_cached_file(temp, '%s/cached_data/news_dataset.sav' %BASE_DIR)
-
-    # temp = load_cached_file('%s/cached_data/news_dataset.sav' %BASE_DIR)
-    #
-    # df = pd.DataFrame(temp)
+    # df = pd.DataFrame(new_data)
     #
     # train_data = train_data.append(df.feature)
     # train_targets = train_targets.append(df.target)
@@ -82,24 +88,20 @@ def execute_classifiers(classifier_method, path=None):
     pprint(results)
 
 
-def execute_logistic_regression(path=None):
-    execute_classifiers(classifier_method=logistic_regression_train,
-                        path=path)
+def execute_logistic_regression(cached_file=None, cached_file_aug=None):
+    execute_classifiers(classifier_method=logistic_regression_train, cached_file=cached_file, cached_file_aug=cached_file_aug)
 
 
-def execute_svm(path=None):
-    execute_classifiers(classifier_method=svm_train,
-                        path=path)
+def execute_svm():
+    execute_classifiers(classifier_method=svm_train)
 
 
-def execute_multi_nomial_nb(path=None):
-    execute_classifiers(classifier_method=multi_nomial_naive_bayes_train,
-                        path=path)
+def execute_multi_nomial_nb():
+    execute_classifiers(classifier_method=multi_nomial_naive_bayes_train)
 
 
 if __name__ == '__main__':
-    # execute_dnn()
-    execute_logistic_regression()
-    # execute_svm()
+    # execute_dnn(cached_file='cached_data/dataset_temp15.sav', cached_file_aug=None)
+    execute_logistic_regression(cached_file='cached_data/dataset_temp15.sav', cached_file_aug=None)
 
 

@@ -20,17 +20,16 @@ def dnn(train_vectors, train_target, test_vectors, test_target):
 
     model = models.Sequential()
 
+    # model.add(layers.Dense(128, activation='relu', input_shape=(train_vectors.shape[1],)))
+    # model.add(layers.Dense(64, activation='relu'))
+    # model.add(layers.Dense(32, activation='relu'))
+
     model.add(layers.Dense(128, activation='relu', input_shape=(train_vectors.shape[1],)))
     model.add(layers.Dense(64, activation='relu'))
-    model.add(layers.Dense(32, activation='relu'))
+    model.add(layers.Dense(128, activation='relu'))
 
-    model.add(layers.Dense(3, activation='softmax'))
-    # model.add(layers.Dense(3, activation='sigmoid'))
-
-
-    # opt = gradient_descent_v2.SGD(learning_rate=0.01, momentum=0.9)
-    # model.compile(optimizer='adam', loss='categorical_crossentropy',
-    #                             metrics=['accuracy'])
+    # model.add(layers.Dense(25, activation='softmax'))
+    model.add(layers.Dense(25, activation='sigmoid'))
 
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
@@ -46,7 +45,7 @@ def dnn(train_vectors, train_target, test_vectors, test_target):
                              batch_size=512, verbose=False)
     print(results)
 
-    model.save('encoder.h5')
+    # model.save('encoder.h5')
 
     # encoder = load_model('encoder.h5')
     # # encode the train data
