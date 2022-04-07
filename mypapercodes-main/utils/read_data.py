@@ -14,6 +14,7 @@ def read_news_dataset(path=news_dataset_path,
 
 
     cached_path = os.path.join(BASE_DIR, cached_file)
+    print(cached_path)
 
 
     if is_forced and os.path.exists(cached_path):
@@ -50,7 +51,6 @@ def read_news_dataset(path=news_dataset_path,
     return pd.DataFrame(data)
 
 
-
 def save_cached_file(data, cached_file_path):
     with open(cached_file_path, 'wb') as f:
         pickle.dump(data, f)
@@ -66,7 +66,8 @@ def replace_underline(text):
     return text.replace("_", " ")
 
 if __name__ == '__main__':
-    print(read_news_dataset().feature[0])
+    # print(read_news_dataset().feature[0])
+    read_news_dataset()
 
 
 

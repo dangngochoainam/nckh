@@ -19,7 +19,6 @@ from keras.utils.np_utils import to_categorical
 def dnn(train_vectors, train_target, test_vectors, test_target):
 
     model = models.Sequential()
-
     # model.add(layers.Dense(128, activation='relu', input_shape=(train_vectors.shape[1],)))
     # model.add(layers.Dense(64, activation='relu'))
     # model.add(layers.Dense(32, activation='relu'))
@@ -28,15 +27,13 @@ def dnn(train_vectors, train_target, test_vectors, test_target):
     model.add(layers.Dense(64, activation='relu'))
     model.add(layers.Dense(128, activation='relu'))
 
-    # model.add(layers.Dense(25, activation='softmax'))
-    model.add(layers.Dense(25, activation='sigmoid'))
+    model.add(layers.Dense(25, activation='softmax'))
+    # model.add(layers.Dense(25, activation='sigmoid'))
 
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
 
-
-    model.fit(train_vectors, train_target,
-              epochs=20, batch_size=32,
+    model.fit(train_vectors, train_target, epochs=20, batch_size=32,
               validation_data=(test_vectors, test_target))
 
     # print(model.summary())
